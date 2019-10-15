@@ -7,5 +7,41 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(rvest)
+library(p8105.datasets)
+
+```
+
+## string manipulation
+
+```{r}
+
+string_vec = c("my", "name", "is", "jeff")
+string_vec
+
+str_detect(string_vec, "jeff")
+str_detect(string_vec, "m")
+
+str_replace(string_vec, "jeff","Jeff")
+str_replace(string_vec, "m", "M")
+```
+
+using str, there are a lot of str stuff in R. everything in stringr package start with str_. 
+str_detect(): tell me whether of not this string exists in this vetor. gives T or F.
+str_replace(): 
+
+```{r}
+
+string_vec = c(
+  "i think we all rule for participating",
+  "i think i have been caught",
+  "i think this will be quite fun actually",
+  "it will be fun, i think"
+  )
+
+str_detect(string_vec, "i think$")
+str_detect(string_vec, "^i think")
 ```
 
