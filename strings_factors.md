@@ -1,39 +1,46 @@
----
-title: "strings_factors"
-author: "Hana Akbarnejad"
-date: "10/15/2019"
-output: github_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-library(tidyverse)
-library(rvest)
-library(p8105.datasets)
-
-```
+strings\_factors
+================
+Hana Akbarnejad
+10/15/2019
 
 ## string manipulation
 
-```{r}
-
+``` r
 string_vec = c("my", "name", "is", "jeff")
 string_vec
+```
 
+    ## [1] "my"   "name" "is"   "jeff"
+
+``` r
 str_detect(string_vec, "jeff")
-str_detect(string_vec, "m")
+```
 
+    ## [1] FALSE FALSE FALSE  TRUE
+
+``` r
+str_detect(string_vec, "m")
+```
+
+    ## [1]  TRUE  TRUE FALSE FALSE
+
+``` r
 str_replace(string_vec, "jeff","Jeff")
+```
+
+    ## [1] "my"   "name" "is"   "Jeff"
+
+``` r
 str_replace(string_vec, "m", "M")
 ```
 
-using str, there are a lot of str stuff in R. everything in stringr package start with str_. 
-str_detect(): tell me whether of not this string exists in this vetor. gives T or F.
-str_replace(): 
+    ## [1] "My"   "naMe" "is"   "jeff"
 
-```{r}
+using str, there are a lot of str stuff in R. everything in stringr
+package start with str\_. str\_detect(): tell me whether of not this
+string exists in this vetor. gives T or F. str\_replace():
 
+``` r
 string_vec = c(
   "i think we all rule for participating",
   "i think i have been caught",
@@ -42,13 +49,19 @@ string_vec = c(
   )
 
 str_detect(string_vec, "i think$")
+```
+
+    ## [1] FALSE FALSE FALSE  TRUE
+
+``` r
 str_detect(string_vec, "^i think")
 ```
 
+    ## [1]  TRUE  TRUE  TRUE FALSE
+
 ^ starts with and ends with $
 
-```{r}
-
+``` r
 string_vec = c(
   "Y'all remember Pres. HW Bush?",
   "I saw a green bush",
@@ -59,10 +72,11 @@ string_vec = c(
 str_detect(string_vec, "[Bb]ush")
 ```
 
- strings which contain this or this [Bb]
- 
-```{r}
+    ## [1]  TRUE  TRUE  TRUE FALSE
 
+strings which contain this or this \[Bb\]
+
+``` r
 string_vec = c(
   '7th inning stretch',
   '1st half soon to begin. Texas won the toss.',
@@ -72,10 +86,12 @@ string_vec = c(
 
 str_detect(string_vec, "[0-9][a-zA-Z]")
 ```
- 
+
+    ## [1]  TRUE  TRUE FALSE  TRUE
+
 ## patterns
 
-```{r}
+``` r
 string_vec = c(
   'Its 7:11 in the evening',
   'want to go to 7-11?',
@@ -86,9 +102,11 @@ string_vec = c(
 str_detect(string_vec, "7.11")
 ```
 
+    ## [1]  TRUE  TRUE FALSE  TRUE
+
 dot(.) matches characters, placeholders and stuff
 
-```{r}
+``` r
 string_vec = c(
   'The CI is [2, 5]',
   ':-]',
@@ -99,9 +117,9 @@ string_vec = c(
 str_detect(string_vec, "\\[")
 ```
 
+    ## [1]  TRUE FALSE  TRUE  TRUE
 
-```{r}
-
+``` r
 pulse_data = 
   haven::read_sas("./data/public_pulse_data.sas7bdat") %>%
   janitor::clean_names() %>% 
@@ -117,10 +135,10 @@ pulse_data =
   arrange(id, visit)
 ```
 
-str_replace() we can find patterns or "exav=ct match" with only "exact match".
+str\_replace() we can find patterns or “exav=ct match” with only “exact
+match”.
 
-```{r}
-
+``` r
 nsduh_url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
 
 table_marj = 
@@ -132,8 +150,7 @@ table_marj =
   as_tibble()
 ```
 
-```{r}
-
+``` r
 data_marj = table_marj %>% 
   select(-contains("P Value")) %>% 
 pivot_longer(
@@ -149,8 +166,7 @@ pivot_longer(
   )
 ```
 
-```{r}
-
+``` r
 data_marj %>%
   filter(age == "12-17") %>% 
   mutate(State = fct_reorder(State, percent)) %>% 
@@ -159,12 +175,15 @@ data_marj %>%
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-you should also pay attention to the levels of factor variable and what is going on underneath variables!
-releveling takes the factor variable and changes it fundamentally!
+![](strings_factors_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+you should also pay attention to the levels of factor variable and what
+is going on underneath variables\! releveling takes the factor variable
+and changes it fundamentally\!
 
 ## revisiting previous examples
-```{r}
 
+``` r
 weather_df = 
   rnoaa::meteo_pull_monitors(
     c("USW00094728", "USC00519397", "USS0023B17S"),
@@ -178,7 +197,35 @@ weather_df =
     tmin = tmin / 10,
     tmax = tmax / 10) %>%
   select(name, id, everything())
+```
 
+    ## Registered S3 method overwritten by 'crul':
+    ##   method                 from
+    ##   as.character.form_file httr
+
+    ## Registered S3 method overwritten by 'hoardr':
+    ##   method           from
+    ##   print.cache_info httr
+
+    ## file path:          C:\Users\Halbatross\AppData\Local\rnoaa\rnoaa\Cache/ghcnd/USW00094728.dly
+
+    ## file last updated:  2019-09-26 10:26:51
+
+    ## file min/max dates: 1869-01-01 / 2019-09-30
+
+    ## file path:          C:\Users\Halbatross\AppData\Local\rnoaa\rnoaa\Cache/ghcnd/USC00519397.dly
+
+    ## file last updated:  2019-09-26 10:27:20
+
+    ## file min/max dates: 1965-01-01 / 2019-09-30
+
+    ## file path:          C:\Users\Halbatross\AppData\Local\rnoaa\rnoaa\Cache/ghcnd/USS0023B17S.dly
+
+    ## file last updated:  2019-09-26 10:27:32
+
+    ## file min/max dates: 1999-09-01 / 2019-09-30
+
+``` r
 weather_df %>%
   mutate(name = fct_relevel(name, c("Waikiki_HA", "CentralPark_NY", "Waterhole_WA"))) %>% 
   ggplot(aes(x = name, y = tmax)) + 
@@ -186,9 +233,14 @@ weather_df %>%
   theme(legend.position = "bottom")
 ```
 
-instead of relevel, we use reorder with respect to somethhing! here: median tmax
+    ## Warning: Removed 3 rows containing non-finite values (stat_ydensity).
 
-```{r}
+![](strings_factors_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+instead of relevel, we use reorder with respect to somethhing\! here:
+median tmax
+
+``` r
 weather_df %>%
   mutate(name = fct_reorder(name, tmax)) %>% 
   ggplot(aes(x = name, y = tmax)) + 
@@ -196,10 +248,13 @@ weather_df %>%
   theme(legend.position = "bottom")
 ```
 
+    ## Warning: Removed 3 rows containing non-finite values (stat_ydensity).
+
+![](strings_factors_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
 airbnb dataset
 
-```{r}
-
+``` r
 data("nyc_airbnb")
 
 nyc_airbnb %>%
@@ -212,4 +267,8 @@ nyc_airbnb %>%
   ylim(0, 1000)
 ```
 
-coord_flip(): changing stuff on x and y axis (just representations)
+    ## Warning: Removed 109 rows containing non-finite values (stat_boxplot).
+
+![](strings_factors_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+coord\_flip(): changing stuff on x and y axis (just representations)
