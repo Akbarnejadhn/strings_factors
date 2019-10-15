@@ -197,6 +197,7 @@ weather_df %>%
 ```
 
 airbnb dataset
+factor_reorder() is great for making plots readable
 
 ```{r}
 
@@ -213,3 +214,4 @@ nyc_airbnb %>%
 ```
 
 coord_flip(): changing stuff on x and y axis (just representations)
+
